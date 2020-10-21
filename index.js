@@ -63,6 +63,16 @@ app.post('/api/persons', (request, response) => {
             error: 'name missing'
         })
     }
+    if (!body.number) {
+        return response.status(400).json({
+            error: 'number missing'
+        })
+    }
+    if (persons.some(p => p.name === body.name)) {
+        return response.status(400).json({
+            error: `${body.name} is already added to the phonebook.`
+        })
+    }
 
     const person = {
         id: generateId(),
